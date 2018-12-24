@@ -1,0 +1,39 @@
+{% for job in enabled_jobs %}
+{{ job.id }}
+<tr>
+  <td>{{ job.id }}</td>
+  <td>{{ job.spider_name }}</td>
+  <td class="text-center">
+    {% if job.scrape_type == 0 %}<span class="label label-success">ALL</span>{% endif %}
+    {% if job.scrape_type == 1 %}<span class="label label-info">NEW</span>{% endif %}
+    {% if job.scrape_type == 2 %}<span class="label label-warning">UNSCRAPED</span>{% endif %}
+  </td>
+  <td class="text-center">
+    {% if job.use_proxies == 1 %}
+    <span class="label label-info">YES</span>
+    {% else %}
+    <span class="label label-default">NO</span>
+    {% endif %}
+  </td>
+  <td class="text-center">
+    {% if job.file == 1 %}
+    <span class="label label-info">YES</span>
+    {% else %}
+    <span class="label label-default">NO</span>
+    {% endif %}
+  </td>
+  <td class="text-center">
+    {% if job.db == 1 %}
+    <span class="label label-info">YES</span>
+    {% else %}
+    <span class="label label-default">NO</span>
+    {% endif %}
+  </td>
+  <td class="text-center">{{ str_date(job.date_started) }}</td>
+  <td class="text-center">{{ job.repeat_time }} minute(s)</td>
+  <td class="text-center">{{ str_date(next_date_event(job.date_started, job.repeat_time)) }}</td>
+  <td class="text-center">
+    <a href="/periodic-jobs/{{ job.id }}/stop"><span class="label label-danger">Stop</span></a>
+  </td>
+</tr>
+{% endfor %}

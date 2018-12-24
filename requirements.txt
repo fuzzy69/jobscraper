@@ -1,0 +1,17 @@
+apscheduler
+celery
+dateparser
+flask
+flask_sqlalchemy
+sqlalchemy_utils
+mysqlclient
+jinja2
+pymysql
+redis
+requests
+scrapy
+scrapy-rotating-proxies
+
+billiard
+sqlalchemy
+twisted

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+TIMESTAMP=$(date +"%Y-%m-%d %H-%M-%S")
+
+
+if [ $1 = "-d" ]; then 
+    celery worker -A tasks -l info
+else
+    celery worker -A tasks -l info --loglevel=warning -f "logs/celery/celery $TIMESTAMP.log"
+fi;

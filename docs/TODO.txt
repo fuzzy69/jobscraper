@@ -1,0 +1,5 @@
+- Add Celery is up checking
+- Fix spider's occasional flaky behaviour
+- Fix spider sending finished job signal before scrape end
+- Improve documentation/comments
+- Refactor project code

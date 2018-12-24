@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% from "macros.html" import flash_messages %}
+
+{% block content_header %}
+<h1>Maintenance</h1>
+{% endblock %}
+
+{% block content_body %}
+<div class="box">
+
+  <div class="box-header">
+    {{ flash_messages() }}
+  </div>
+
+  <div class="box-body table-responsive">
+    <form action="/project/maintenance" method="post">
+      <div class="modal-body">
+
+        <div class="form-group">
+          <label>WebUI Log Files:</label><br />
+          <label for="webui_log_files" class="checkbox-inline"><input type="checkbox" id="webui_log_files" name="webui_log_files" />Remove log files</label>
+        </div>
+
+        <div class="form-group">
+          <label>Celery Log Files:</label><br />
+          <label for="celery_log_files" class="checkbox-inline"><input type="checkbox" id="celery_log_files" name="celery_log_files" />Remove log files</label>
+        </div>
+
+        <div class="form-group">
+          <label>Feed Files:</label><br />
+          <label for="feed_files" class="checkbox-inline"><input type="checkbox" id="feed_files" name="feed_files" />Remove feed files</label>
+        </div>
+
+      </div>
+
+      <div class="modal-footer" style="clear: both;">
+        <button type="submit" class="btn btn-primary">Run</button>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+{% endblock %}

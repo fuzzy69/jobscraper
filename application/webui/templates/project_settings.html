@@ -1,0 +1,318 @@
+{% extends "base.html" %}
+{% from "macros.html" import flash_messages %}
+{% block content_header %}
+<h1>Settings</h1>
+{% endblock %}
+{% block content_body %}
+<div class="box">
+    <div class="box-header">
+        {{ flash_messages() }}
+    </div>
+    <div class="box-body table-responsive">
+        <div>
+            <form action="/project/settings" method="post">
+                <div class="modal-body">
+
+                    <ul class="nav nav-tabs" style="">
+                        <li class="active"><a data-toggle="tab" href="#home">General</a></li>
+                        <li><a data-toggle="tab" href="#menu1">Spiders</a></li>
+                        <li><a data-toggle="tab" href="#menu2">DB</a></li>
+                        <li><a data-toggle="tab" href="#menu3">Celery</a></li>
+                        <li><a data-toggle="tab" href="#menu4">Redis</a></li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div id="home" class="tab-pane fade in active" style="padding-top: 15px;">
+                            <h4>General AdminUI settings</h4>
+                            <hr />
+                            <div class="form-group">
+                              <label for="active_jobs_refresh">Refresh active jobs on every (seconds):</label><br />
+                                <input id="refresh" name="refresh" />
+                            </div>
+                            <div class="form-group">
+                              <label for="ipp">Completed jobs, items per page (pagination):</label><br />
+                                <input id="ipp" name="ipp" />
+                            </div>
+                        </div>
+                        <div id="menu1" class="tab-pane fade" style="padding-top: 15px;">
+                            <h4>Default settings for all spiders</h4>
+                            <hr />
+                                <div class="form-group">
+                                  <label for="delay">Delay between spider scrape requests (in seconds):</label><br />
+                                        <input id="delay" name="delay" />
+                                 </div>
+                                <div class="form-group">
+                                  <label for="concurrent_requests">Concurrent/paralel requests:</label><br />
+                                    <input id="concurrent_requests" name="concurrent_requests" />
+                                </div>
+                                <div class="form-group">
+                                  <label for="timeout">Timeout (spider wait time for website response):</label><br />
+                                    <input id="timeout" name="timeout" />
+                                 </div>
+                                <div class="form-group">
+                                  <label for="retries">Retries (number of scrape retries per one URL):</label><br />
+                                    <input id="retries" name="retries" />
+                                </div><br />
+
+                        </div>
+                        <div id="menu2" class="tab-pane fade" style="padding-top: 15px;">
+
+                            <h4>MySQL connection settings</h4>
+                            <hr />
+                            <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="db_host">Host (IP Address):</label><br />
+                                <input type="text" class="form-control" name="db_host" placeholder="" value="{{ settings.db_host }}" maxlength="100" />
+                            </div>
+                            <div class="form-group">
+                                <label for="db_port">Port:</label><br />
+                                <input type="text" class="form-control" name="db_port" placeholder="" value="{{ settings.db_port }}" maxlength="100" />
+                            </div>
+                            <div class="form-group">
+                                <label for="db_name">Database Name:</label><br />
+                                <input type="text" class="form-control" name="db_name" placeholder="" value="{{ settings.db_name }}" maxlength="100" />
+                            </div>
+                            <div class="form-group">
+                                <label for="db_user">Username:</label><br />
+                                <input type="text" class="form-control" name="db_user" placeholder="" value="{{ settings.db_user }}" maxlength="100" />
+                            </div>
+                            <div class="form-group">
+                                <label for="db_pass">Password:</label><br />
+                                <input type="password" class="form-control" name="db_pass" placeholder="" value="{{ settings.db_pass }}" maxlength="100" />
+                            </div>
+                          </div><br />
+                        </div>
+
+                        <div id="menu3" class="tab-pane fade" style="padding-top: 15px;">
+
+                            <h4>RabbitMQ settings</h4>
+                            <hr />
+                            <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="broker_host">Broker Host (IP Address):</label><br />
+                                <input type="text" class="form-control" name="broker_host" placeholder="" value="{{ settings.broker_host }}" maxlength="100" />
+                            </div>
+                            <div class="form-group">
+                                <label for="broker_port">Broker Port:</label><br />
+                                <input type="text" class="form-control" name="broker_port" placeholder="" value="{{ settings.broker_port }}" maxlength="100" />
+                            </div>
+                            <div class="form-group">
+                                <label for="broker_user">Broker Username:</label><br />
+                                <input type="text" class="form-control" name="broker_user" placeholder="" value="{{ settings.broker_user }}" maxlength="100" />
+                            </div>
+                            <div class="form-group">
+                                <label for="broker_pass">Broker Password:</label><br />
+                                <input type="password" class="form-control" name="broker_pass" placeholder="" value="{{ settings.broker_pass }}" maxlength="100" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div id="menu4" class="tab-pane fade" style="padding-top: 15px;">
+
+                            <h4>Redis settings</h4>
+                            <hr />
+                            <div class="col-lg-3">
+                            <div class="form-group">
+                                <label for="redis_host">Redis Host (IP Address):</label><br />
+                                <input type="text" class="form-control" name="redis_host" placeholder="" value="{{ settings.redis_host }}" maxlength="100" />
+                            </div>
+                            <div class="form-group">
+                                <label for="redis_port">Redis Port:</label><br />
+                                <input type="text" class="form-control" name="redis_port" placeholder="" value="{{ settings.redis_port }}" maxlength="100" />
+                            </div>
+                          </div>
+                        </div>
+
+                    </div>
+<br />
+                </div>
+                <div class="modal-footer" style="clear: both;">
+                    <button type="button" class="btn btn-default pull-left" data-toggle="modal" data-target="#test-settings-results" id="test-settings">Test Settings</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" role="dialog" id="test-settings-results">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="tab-content" style="margin-top: 10px;">
+            <!-- <form action="/project/ project.id /job/add" method="post"> -->
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span></button>
+                    <h4 class="modal-title">Test Settings</h4>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <label>DB</label>
+                        <span id="db_status" class="pull-right">
+                          <span class="label label-success pull-right hide">Success</span>
+                          <span class="label label-danger pull-right hide">Failed</span>
+                          <span class="label label-default pull-right">Unknown</span>
+                        </span>
+                    </div>
+                    <div>
+                        <label>Celery Broker</label> 
+                        <span id="celery_broker_status" class="pull-right">
+                          <span class="label label-success pull-right hide">Success</span>
+                          <span class="label label-danger pull-right hide">Failed</span>
+                          <span class="label label-default pull-right">Unknown</span>
+                        </span>
+                    </div>
+                    <div>
+                        <label>Celery</label> 
+                        <span id="celery_status" class="pull-right">
+                          <span class="label label-success pull-right hide">Success</span>
+                          <span class="label label-danger pull-right hide">Failed</span>
+                          <span class="label label-default pull-right">Unknown</span>
+                        </span>
+                    </div>
+                    <div>
+                        <label>Redis</label> 
+                        <span id="redis_status" class="pull-right">
+                          <span class="label label-success pull-right hide">Success</span>
+                          <span class="label label-danger pull-right hide">Failed</span>
+                          <span class="label label-default pull-right">Unknown</span>
+                        </span>
+                    </div>
+                <div class="progress"><div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id="progress-bar">0%</div><div id="progress-bar-status" class="text-center"></div></div>
+                <div class="message-bar">&nbsp;</div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  $(function() {
+    var refresh = $("#refresh").spinner();
+    var ipp = $("#ipp").spinner();
+    var delay = $("#delay").spinner();
+    var concurrent_requests = $("#concurrent_requests").spinner();
+    var retries = $("#retries").spinner();
+    var timeout = $("#timeout").spinner();
+    $("#refresh").spinner({
+        min: 1,
+        max: 60,
+    });
+    $("#ipp").spinner({
+        min: 10,
+        max: 1000,
+    });
+    $("#delay").spinner({
+        min: 1,
+        max: 60,
+    });
+    $("#concurrent_requests").spinner({
+        min: 1,
+        max: 32,
+    });
+    $("#retries").spinner({
+        min: 1,
+        max: 10,
+    });
+    $("#timeout").spinner({
+        min: 1,
+        max: 60,
+    });
+    refresh.spinner("value", {{ settings.refresh }});
+    ipp.spinner("value", {{ settings.ipp }});
+    delay.spinner("value", {{ settings.delay }});
+    concurrent_requests.spinner("value", {{ settings.concurrent_requests }});
+    retries.spinner("value", {{ settings.retries }});
+    timeout.spinner("value", {{ settings.timeout }});
+
+  $("#test").click(function() {
+    showStatus("redis_status", 2);
+  });
+
+  function showStatus(el, status) {
+    if (status == 0) {
+      $("#" + el + " span.label-default").removeClass("hide");
+      if (!$("#" + el + " span.label-danger").hasClass("hide")) {
+        $("#" + el + " span.label-danger").addClass("hide");
+      }
+      if (!$("#" + el + " span.label-success").hasClass("hide")) {
+        $("#" + el + " span.label-success").addClass("hide");
+      }
+    } else if (status == 1) {
+      if (!$("#" + el + " span.label-default").hasClass("hide")) {
+        $("#" + el + " span.label-default").addClass("hide");
+      }
+      $("#" + el + " span.label-danger").removeClass("hide");
+      if (!$("#" + el + " span.label-success").hasClass("hide")) {
+        $("#" + el + " span.label-success").addClass("hide");
+      }
+    } else if (status == 2) {
+      if (!$("#" + el + " span.label-default").hasClass("hide")) {
+        $("#" + el + " span.label-default").addClass("hide");
+      }
+      if (!$("#" + el + " span.label-danger").hasClass("hide")) {
+        $("#" + el + " span.label-danger").addClass("hide");
+      }
+      $("#" + el + " span.label-success").removeClass("hide");
+    }
+  }
+
+  $("#test-settings").click(function() {
+    showStatus("db_status", 0);
+    showStatus("celery_broker_status", 0);
+    showStatus("celery_status", 0);
+    showStatus("redis_status", 0);
+    setProgressBar(0, 100, "Testing ...");
+    $.ajax({
+      method: "POST",
+      url: "/xhr/test-settings",
+    })
+    .fail(function(data) {
+      console.log(data.status);
+    })
+    .done(function(data) {
+      if (data.status) {
+        var interval;
+        var delay = 3;
+        interval = setInterval(function() {
+            $.ajax({
+              method: "POST",
+              url: "/xhr/test-settings-results",
+            })
+            .fail(function(data) {
+              console.log(data);
+            })
+            .done(function(data) {
+                // console.log(data);
+                $("#running-jobs").html(data.html);
+                showStatus("db_status", data.db_status);
+                showStatus("celery_broker_status", data.celery_broker_status);
+                showStatus("celery_status", data.celery_status);
+                showStatus("redis_status", data.redis_status);
+                setProgressBar(data.progress, 100, "Testing ...");
+                if (data.done) {
+                  clearInterval(interval);
+                }
+            })
+            .always(function() {
+              console.log("always");
+            });
+          }, delay * 1000);
+      }
+    })
+    .always(function() {
+      console.log("always");
+    });
+  });
+
+  });
+</script>
+{% endblock %}

@@ -1,0 +1,48 @@
+2018-11-04
+- Updated log messages
+- Updated Readme
+- Various small code fixes
+- Code cleanup
+
+2018-11-01
+- Added test settings functionality
+- Moved static and templates directory to PROJECT_DIR/application/webui/
+- Updated Readme
+- Various small code fixes
+- Code cleanup
+
+2018-10-16
+- Added database and table creation when settings are updated
+- Code cleanup
+
+2018-10-15
+- Fixed/improved WebUI file/console logging
+- Added maintenance functionalities (removing log files)
+- Added/fixed completed jobs deletion
+- Fixed starting (adding to scheduler) periodic jobs after WebuUI restart
+
+2018-10-12
+- Added Celery logging to a file
+- Added completed jobs deletion (WIP)
+
+2018-10-11
+- Added refresh functionality to spider log and JSON feed view for active spider jobs
+- Added initialize MySQL DB if it isn't present functionality
+- Refactored flask admin and ajax endpoints to separate Python files
+- Improved periodc jobs
+
+2018-09-29
+- Added support of more countries
+- Added proxy support
+- Removed spider related settings
+- Added active page refresh interval and pagination size settings
+- Added maintenance page (WIP)
+- Updated docstrings/comments
+- Code cleanup/refactor
+
+2018-09-22
+- Fixed duplicate records/job posts in MySQL DB
+- Added auto saving previously selected scrape settings *
+- Fixed job post date added parsing
+- Fixed job log CSS styling (overlapped text lines)
+- Added dynamic updating of active jobs *

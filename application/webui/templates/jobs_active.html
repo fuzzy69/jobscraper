@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+{% from "macros.html" import flash_messages %}
+{% block content_header %}
+<h1>Active Jobs</h1>
+{% endblock %}
+{% block content_body %}
+<div class="box">
+    <div class="box-header">
+        {{ flash_messages() }}
+    </div>
+    <div class="box-header">
+        <h3 class="box-title">Next Jobs</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th>Spider</th>
+                <th width="10%" class="text-center">Scrape Type</th>
+                <th width="10%" class="text-center">Use Proxies</th>
+                <th width="10%" class="text-center">JSON</th>
+                <th width="10%" class="text-center">DB</th>
+                <th width="10%" class="text-center">Action</th>
+            </tr>
+            </thead>
+            <tbody id="next-jobs">
+<!--                 {% for job in next_jobs %}
+                <tr>
+                    <td>{{ job.id }}</td>
+                    <td>{{ job.spider_name }}</td>
+                    <td class="text-center">
+                        {% if job.scrape_type == 0 %}<span class="label label-success">ALL</span>{% endif %}
+                        {% if job.scrape_type == 1 %}<span class="label label-info">NEW</span>{% endif %}
+                        {% if job.scrape_type == 2 %}<span class="label label-warning">UNSCRAPED</span>{% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if job.use_proxies == 1 %}
+                        <span class="label label-info">YES</span>
+                        {% else %}
+                        <span class="label label-default">NO</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if job.file == 1 %}
+                        <span class="label label-info">YES</span>
+                        {% else %}
+                        <span class="label label-default">NO</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        {% if job.images == 1 %}
+                        <span class="label label-info">YES</span>
+                        {% else %}
+                        <span class="label label-default">NO</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-center">
+                        <a href="/jobs/{{ job.id }}/stop"><span class="label label-danger">Cancel</span></a>
+                    </td>
+                </tr>
+                {% endfor %}
+ -->            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="box">
+    <div class="box-header">
+        <h3 class="box-title">Running Jobs</h3>
+        <div class="box-tools pull-right">
+            <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+            </button>
+        </div>
+    </div>
+    <div class="box-body table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th width="5%">#</th>
+                <th>Spider</th>
+                <th width="5%">Scrape Type</th>
+                <th width="5%">Use Proxies</th>
+                <th width="5%">JSON</th>
+                <th width="5%">DB</th>
+                <!-- <th width="5%">Images</th> -->
+                <th width="10%">Runtime</th>
+                <th width="10%">Started</th>
+                <th width="10%">Log</th>
+                <th width="10%">Action</th>
+            </tr>
+            </thead>
+            <tbody id="running-jobs"></tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block script %}
+<script type="text/javascript">
+  $(document).ready(function() {
+    var interval;
+    var delay = {{ refresh }};
+
+    $.ajax({
+      method: "GET",
+      url: "/xhr/next-jobs-table",
+    })
+    .fail(function(data) {
+      console.log(data);
+    })
+    .done(function(data) {
+        console.log(data);
+        $("#next-jobs").html(data.html);
+    })
+    .always(function() {
+      console.log("always");
+    });
+    $.ajax({
+      method: "GET",
+      url: "/xhr/running-jobs-table",
+    })
+    .fail(function(data) {
+      console.log(data);
+    })
+    .done(function(data) {
+        console.log(data);
+        $("#running-jobs").html(data.html);
+    })
+    .always(function() {
+      console.log("always");
+    });
+
+    interval = setInterval(function() {
+      $.ajax({
+        method: "GET",
+        url: "/xhr/next-jobs-table",
+      })
+      .fail(function(data) {
+        console.log(data);
+      })
+      .done(function(data) {
+          console.log(data);
+          $("#next-jobs").html(data.html);
+      })
+      .always(function() {
+        console.log("always");
+      });
+      $.ajax({
+        method: "GET",
+        url: "/xhr/running-jobs-table",
+      })
+      .fail(function(data) {
+        console.log(data);
+      })
+      .done(function(data) {
+          console.log(data);
+          $("#running-jobs").html(data.html);
+      })
+      .always(function() {
+        console.log("always");
+      });
+    }, delay * 1000);
+
+  });
+</script>
+{% endblock %}

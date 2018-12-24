@@ -1,0 +1,35 @@
+{% for job in next_jobs %}
+<tr>
+    <td>{{ job.id }}</td>
+    <td>{{ job.spider_name }}</td>
+    <td class="text-center">
+        {% if job.scrape_type == scrape_type.ALL %}<span class="label label-success">ALL</span>{% endif %}
+        {% if job.scrape_type == scrape_type.NEW %}<span class="label label-info">NEW</span>{% endif %}
+        {% if job.scrape_type == scrape_type.UNSCRAPED %}<span class="label label-warning">UNSCRAPED</span>{% endif %}
+    </td>
+    <td class="text-center">
+        {% if job.use_proxies %}
+        <span class="label label-info">YES</span>
+        {% else %}
+        <span class="label label-default">NO</span>
+        {% endif %}
+    </td>
+    <td class="text-center">
+        {% if job.save_to_file %}
+        <span class="label label-info">YES</span>
+        {% else %}
+        <span class="label label-default">NO</span>
+        {% endif %}
+    </td>
+    <td class="text-center">
+        {% if job.save_to_db %}
+        <span class="label label-info">YES</span>
+        {% else %}
+        <span class="label label-default">NO</span>
+        {% endif %}
+    </td>
+    <td class="text-center">
+        <a href="/jobs/{{ job.id }}/stop"><span class="label label-danger">Cancel</span></a>
+    </td>
+</tr>
+{% endfor %}
