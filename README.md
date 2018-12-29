@@ -1,6 +1,11 @@
 # Job Posts Scraper
 
 
+### Screenshot
+
+![Screenshot](_/screenshot_periodic_jobs.png)
+
+
 ### Requirements
 
 - python (>=3.5)
