@@ -14,6 +14,11 @@
 - MySQL (Data storage dependency)
 
 
+### Credits
+
+- UI is based on code from [SpiderKeeper](https://github.com/DormyMo/SpiderKeeper) project
+
+
 ### Project Structure
 
 - jobscraper
